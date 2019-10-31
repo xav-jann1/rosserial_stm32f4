@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="2">
+  <!-- Info -->
+  <name>rosserial_stm32f4</name>
+  <version>1.0.0</version>
+  <description>
+    ROSserial implementation for STM32F4, developed to work with STM32CubeIDE projects.
+  </description>
+
+  <maintainer email="ded2ai80@gmail.com">Xavier Jannin</maintainer>
+  <author>Xavier Jannin</author>
+
+  <license>BSD</license>
+
+  <!-- Dependencies -->
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>message_generation</build_depend>
+  
+  <exec_depend>message_runtime</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>rosserial_client</exec_depend>
+  <exec_depend>rosserial_msg</exec_depend>
+
+</package>
