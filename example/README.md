@@ -1,13 +1,13 @@
 ## Simple example
 
-Example, tested with `NUCLEO F411RE`,  to create a `Publisher` (`/chatter`: which send text) and a `Subscriber` (`toggle_led`: to toggle the integrated LED):
+Example, tested with `NUCLEO F411RE`,  to create a `Publisher` (`/chatter`: send text) and a `Subscriber` (`/toggle_led`: toggle the integrated LED) :
 
-1. Add `mainpp.h` and `mainpp.cpp` files in the project:
-  - Add `mainpp.h` in `Inc`:
-  - Add `mainpp.cpp` in `Src`:
+1. Create `mainpp.h` and `mainpp.cpp` files in the project :
+  - Copy `mainpp.h` content in `Inc/mainpp.h` :
+  - Copy `mainpp.cpp` content in `Src/mainpp.cpp` :
 
-2. Add in `main.c`:
-- Include `mainpp.h`:
+2. Add in `main.c` :
+- Include `mainpp.h` :
     ```c++
     /* USER CODE BEGIN Includes */
     #include "mainpp.h"
@@ -43,15 +43,15 @@ Example, tested with `NUCLEO F411RE`,  to create a `Publisher` (`/chatter`: whic
     $ rosrun rosserial_python serial_node.py _port:=/dev/ttyS3 _baud:=115200
     ```
 - Third terminal:
-  - list the topic of the STM32 :
+  - List the topic of the STM32 :
     ```sh
     $ rostopic list
     ```
-  - Echo what the node has to say:
+  - Echo what the node has to say :
     ```
     $ rostopic echo /chatter
     ```
-  - Toggle the integrated LED:
+  - Toggle the integrated LED :
     ```
-    $ rostopic pub toggle_led -1 std_msgs/Empty
+    $ rostopic pub /toggle_led -1 std_msgs/Empty
     ```

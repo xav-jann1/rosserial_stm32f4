@@ -34,7 +34,7 @@ $ rosrun rosserial_stm32f4 make_libraries.py .
     $ cd path/to/your/stm32/project/Core
     $ rosrun rosserial_stm32f4 make_libraries.py .
     ```
-    (`rosserial` should already be installed, if not: `sudo apt-get install ros-<distro>-rosserial`)
+    (`rosserial` should already be installed, if not : `sudo apt-get install ros-<distro>-rosserial`)
 
 4. Add `ros_lib` to the default paths for compilation :
 - Open `Project / Properties` window
@@ -79,7 +79,7 @@ In `ros_lib/STM32Hardware.h`, change `?` to the number of the serie or the `USAR
 extern UART_HandleTypeDef huart?;
 ```
 
-- And in the class' constructor:
+- And in the class constructor:
 ```c
 STM32Hardware():
   huart(&huart?), rind(0), twind(0), tfind(0){
