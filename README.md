@@ -22,12 +22,12 @@ $ rosrun rosserial_stm32f4 make_libraries.py .
 2. Configure microcontroller :
     - Enable `USART2` global interrupt
     - Enable `DMA` for `USART2_TX` and `USART2_RX` and set their priority to `HIGH`
-    - Generate code (+ [checking](#check-generated-code))
+    - Generate code (+ [checking](#check-generated-code--very-important))
 
 3. Create `ROS` libraries in your project :
     ```sh
     $ cd your/catkin/workspace/src
-    $ git clone https://github.com/......./rosserial_stm32f4
+    $ git clone https://github.com/xav-jann1/rosserial_stm32f4
     $ cd ..
     $ catkin_make
     $ source devel/setup.bash
@@ -38,9 +38,9 @@ $ rosrun rosserial_stm32f4 make_libraries.py .
 
 4. Add `ros_lib` to the default paths for compilation :
 - Open `Project / Properties` window
-- Add in `C/C++ / Settings / Tool Settings / Include paths`: `../Core/Inc/ros_lib`
+- Add in `C/C++ / Settings / Tool Settings / Include paths` : `../Core/Inc/ros_lib`
 
-### Check generated code
+### Check generated code (! Very important)
 
 This implementation use [`DMA`](https://embedds.com/using-direct-memory-access-dma-in-stm23-projects/) for the serial interface.
 
@@ -58,7 +58,7 @@ To correcly work, `MX_DMA_Init()` should be before `MX_USART2_UART_Init()`. If n
 
 See a [simple example](./example) with a `Publisher` and a `Subscriber`.
 
-Also, see [yoneken's examples](https://github.com/yoneken/rosserial_stm32/tree/master/src/ros_lib/examples)
+Also, see [yoneken's examples](https://github.com/yoneken/rosserial_stm32/tree/master/src/ros_lib/examples).
 
 ---
 ## Usage for other STM32 series
@@ -79,9 +79,8 @@ In `ros_lib/STM32Hardware.h`, change `?` to the number of the serie or the `USAR
 extern UART_HandleTypeDef huart?;
 ```
 
-- And in the class constructor:
-```c
-STM32Hardware():
-  huart(&huart?), rind(0), twind(0), tfind(0){
-}
+- And in the class constructor :
+```cpp
+ public:
+  STM32Hardware(): huart(&huart?), rind(0), twind(0), tfind(0) {}
 ```
