@@ -1,16 +1,16 @@
 #include <mainpp.h>
 #include <ros.h>
-#include <std_msgs/String.h>
 #include <std_msgs/Empty.h>
+#include <std_msgs/String.h>
 
 ros::NodeHandle nh;
 
 // DMA callbacks:
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
   nh.getHardware()->flush();
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   nh.getHardware()->reset_rbuf();
 }
 
@@ -20,7 +20,7 @@ ros::Publisher chatter("chatter", &str_msg);
 char hello[] = "Hello world!";
 
 // Subscriber:
-void led_cb(const std_msgs::Empty& msg) {
+void led_cb(const std_msgs::Empty &msg) {
   HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 }
 ros::Subscriber<std_msgs::Empty> led_sub("toggle_led", &led_cb);

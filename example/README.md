@@ -48,10 +48,11 @@ Example, tested with `NUCLEO F411RE`,  to create a `Publisher` (`/chatter`: send
     $ rostopic list
     ```
   - Echo what the node has to say :
-    ```
+    ```sh
     $ rostopic echo /chatter
     ```
   - Toggle the integrated LED :
-    ```
+    ```sh
     $ rostopic pub /toggle_led -1 std_msgs/Empty
+    $ rostopic pub /toggle_led -r 2 std_msgs/Empty  # Rate 2 Hz
     ```
