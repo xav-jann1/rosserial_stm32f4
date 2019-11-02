@@ -2,7 +2,7 @@
 
 ROSserial implementation for `STM32F4`, developed to work with [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) projects.
 
-Heavily based on [yoneken's rosserial_stm32](https://github.com/yoneken/rosserial_stm32), which is in part based on [rosserial_mbed](https://github.com/ros-drivers/rosserial/tree/melodic-devel/rosserial_mbed).
+Heavily based on [rosserial_mbed](https://github.com/ros-drivers/rosserial/tree/melodic-devel/rosserial_mbed) and inspired by [yoneken's rosserial_stm32](https://github.com/yoneken/rosserial_stm32).
 Also exists for [STM32F7](https://github.com/fdila/rosserial_stm32f7), but has not been tested.
 
 
@@ -38,7 +38,7 @@ $ rosrun rosserial_stm32f4 make_libraries.py .
 
 4. Add `ros_lib` to the default paths for compilation :
 - Open `Project / Properties` window
-- Add in `C/C++ / Settings / Tool Settings / Include paths` : `../Core/Inc/ros_lib`
+- Add in `C/C++ / Settings / Tool Settings / MCU G++ Compiler / Include paths` : `../Core/Inc/ros_lib`
 
 ### Check generated code (! Very important)
 
@@ -46,7 +46,7 @@ This implementation use [`DMA`](https://embedds.com/using-direct-memory-access-d
 
 Sometimes, the generated code initialises `DMA` and `USART` in the wrong order.
 
-To correcly work, `MX_DMA_Init()` should be before `MX_USART2_UART_Init()`. If not, add `MX_DMA_Init()` between the `Init` brackets :
+To work correctly, `MX_DMA_Init()` should be before `MX_USART2_UART_Init()`. If not, add `MX_DMA_Init()` between the `Init` brackets :
 ```cpp
   /* USER CODE BEGIN Init */
   MX_DMA_Init();
@@ -63,24 +63,20 @@ Also, see [yoneken's examples](https://github.com/yoneken/rosserial_stm32/tree/m
 ---
 ## Usage for other STM32 series
 
-This package can easily be modified to be used for other STM32 series, by updating only one file :
+This package can easily be modified to be used for other STM32 series, by updating only two files :
 
-In `ros_lib/STM32Hardware.h`, change `?` to the number of the serie or the `USART` used for the project :
+- In `ros_lib/BufferedSerial.hpp`'s includes, change `?` to the number of the serie :
+    ```cpp
+    #include <string.h>
+    #include "stm32f?xx_hal.h"
+    #include "stm32f?xx_hal_uart.h"
+    ```
 
-- Change the library files :
-```c
-#include "stm32f?xx_hal.h"
-#include "stm32f?.xx_hal_uart.h"
-#include "stm32f?.xx_hal_tim.h"
-```
+- In `ros_lib/STM32Hardware.h`, update the number of the `huart` used for the project :
+    ```cpp
+    #include "BufferedSerial.hpp"
+    extern UART_HandleTypeDef huart?;
 
-- Change the number of the UART used :
-```cpp
-extern UART_HandleTypeDef huart?;
-```
-
-- And in the class constructor :
-```cpp
- public:
-  STM32Hardware(): huart(&huart?), rind(0), twind(0), tfind(0) {}
-```
+    // Create Serial Buffer with UART?:
+    BufferedSerial buff_serial(huart?);
+    ```
