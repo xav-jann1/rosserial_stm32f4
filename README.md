@@ -38,13 +38,13 @@ $ rosrun rosserial_stm32f4 make_libraries.py .
 
 4. Add `ros_lib` to the default paths for compilation :
 - Open `Project / Properties` window
-- Add in `C/C++ / Settings / Tool Settings / MCU G++ Compiler / Include paths` : `../Core/Inc/ros_lib`
+- Add in `C/C++ Build / Settings / Tool Settings / MCU G++ Compiler / Include paths` : `../Core/Inc/ros_lib`
 
 ### Check generated code (! Very important)
 
 This implementation use [`DMA`](https://embedds.com/using-direct-memory-access-dma-in-stm23-projects/) for the serial interface.
 
-Sometimes, the generated code initialises `DMA` and `USART` in the wrong order.
+Sometimes, the generated code initialises `DMA` and `USART` in the wrong order in the file `main.c`.
 
 To work correctly, `MX_DMA_Init()` should be before `MX_USART2_UART_Init()`. If not, add `MX_DMA_Init()` between the `Init` brackets :
 ```cpp

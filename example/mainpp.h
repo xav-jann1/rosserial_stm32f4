@@ -2,7 +2,7 @@
 #define INC_MAINPP_H_
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 void setup(void);

@@ -3,16 +3,8 @@
 #include <std_msgs/Empty.h>
 #include <std_msgs/String.h>
 
+// Node:
 ros::NodeHandle nh;
-
-// DMA callbacks:
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
-  nh.getHardware()->flush();
-}
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-  nh.getHardware()->reset_rbuf();
-}
 
 // Publisher:
 std_msgs::String str_msg;

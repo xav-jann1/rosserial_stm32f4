@@ -2,9 +2,9 @@
 
 Example, tested with `NUCLEO F411RE`,  to create a `Publisher` (`/chatter`: send text) and a `Subscriber` (`/toggle_led`: toggle the integrated LED) :
 
-1. Create `mainpp.h` and `mainpp.cpp` files in the project :
-  - Copy `mainpp.h` content in `Inc/mainpp.h` :
-  - Copy `mainpp.cpp` content in `Src/mainpp.cpp` :
+1. Create [`mainpp.h`](./mainpp.h) and [`mainpp.cpp`](./mainpp.cpp) files in the project :
+  - Copy [`mainpp.h`](./mainpp.h) content in `Inc/mainpp.h` :
+  - Copy [`mainpp.cpp`](./mainpp.cpp) content in `Src/mainpp.cpp` :
 
 2. Add in `main.c` :
 - Include `mainpp.h` :
