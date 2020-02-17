@@ -7,6 +7,12 @@
 
 #include "BufferedSerial.hpp"
 
+#include "BufferedSerial.hpp"
+extern UART_HandleTypeDef huart2;
+
+// Create Serial Buffer with UART2:
+BufferedSerial buff_serial(huart2);
+
 // Constructor:
 BufferedSerial::BufferedSerial(UART_HandleTypeDef &huart_)
   : huart(huart_) {}
@@ -96,3 +102,16 @@ inline void BufferedSerial::reset_rx_buffer(void) {
 
 // Get UART Handle:
 UART_HandleTypeDef* const BufferedSerial::get_handle(void) { return &huart; }
+
+
+// DMA callbacks:
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
+  // Comparing pointers: (remove equality if only one UART is used)
+  if (huart->Instance == buff_serial.get_handle()->Instance) {
+    buff_serial.flush_tx_buffer();
+  }
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
+  buff_serial.reset_rx_buffer();  // Can be commented if DMA mode for RX is Circular
+}

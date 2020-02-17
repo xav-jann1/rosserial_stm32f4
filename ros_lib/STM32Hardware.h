@@ -9,10 +9,9 @@
 #define ROS_STM32_HARDWARE_H_
 
 #include "BufferedSerial.hpp"
-extern UART_HandleTypeDef huart2;
 
 // Create Serial Buffer with UART2:
-BufferedSerial buff_serial(huart2);
+extern BufferedSerial buff_serial;
 
 class STM32Hardware {
  public:
@@ -33,17 +32,5 @@ class STM32Hardware {
  protected:
   BufferedSerial* serial;
 };
-
-// DMA callbacks:
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart) {
-  // Comparing pointers: (remove equality if only one UART is used)
-  if (huart->Instance == buff_serial.get_handle()->Instance) {
-    buff_serial.flush_tx_buffer();
-  }
-}
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
-  buff_serial.reset_rx_buffer();  // Can be commented if DMA mode for RX is Circular
-}
 
 #endif
